@@ -1,18 +1,70 @@
 def part1() :
 
-    with open("input/test/day04.txt") as file : 
+    with open("input/day04.txt") as file : 
 
         bingoNumbers, bingoBoards = parseBingoInput(file)
 
-        print(bingoNumbers)
-        # printBingoBoards(bingoBoards)
+        # bingoNumbers = [22, 8, 21, 6, 1]
+        finalScore = 0
+
         for drawnNumber in bingoNumbers : 
             for board in bingoBoards : 
                 markNumberAtBoard(drawnNumber, board)
+                if checkForBingo(board) : 
+                    print("BINGO")
+                    finalScore = calculateScoreForBoard(drawnNumber, board)
+                    break 
+            else : 
+                continue 
             break
-                
-        # print("----- AFTER -----")
-        # printBingoBoards(bingoBoards)
+                # Maybe check after putting the 5th number,
+                # before there is no way that we got it lol
+        print("Score for bingo is : ", finalScore)
+
+               
+
+def calculateScoreForBoard(drawnNumber, board) : 
+
+    totalSum = 0 
+    for line in board : 
+        for dictionary in line : 
+            if dictionary[1] != 1 : 
+                totalSum += dictionary[0]
+    
+    print("Unmarked numbers sum is ", totalSum, "last drawnNumber" , drawnNumber)
+    print("Final score : ", totalSum * drawnNumber)
+    return totalSum * drawnNumber
+
+
+def checkForBingo(board) : 
+
+    bingo = False
+
+    # Check for all rows
+    for line in board : 
+
+        bingoCount = 0
+        for dictionary in line : 
+            if dictionary[1] == 1 : 
+                bingoCount += 1
+        
+        if bingoCount == 5 :
+            return True
+
+    # Check for all columns 
+
+    for j in range(5) : 
+
+        bingoCount = 0 
+        for i in range(5) : 
+            if board[i][j][1] == 1 : 
+                bingoCount += 1
+
+        if (bingoCount == 5) : 
+            print("Vertical Bingo !")
+            return True
+
+    return bingo
 
 
 def markNumberAtBoard(drawnNumber, board) : 
@@ -71,5 +123,4 @@ def printBingoBoards(bingoBoards) :
                 print(line)
 
 part1()
-
 
