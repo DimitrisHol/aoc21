@@ -21,7 +21,26 @@ def part1() :
                 # before there is no way that we got it lol
         print("Score for bingo is : ", finalScore)
 
-               
+def part2() : 
+
+    with open("input/day04.txt") as file : 
+
+        bingoNumbers, bingoBoards = parseBingoInput(file)
+        # Mark each board if it gets a bingo with a True variable.
+        # We should have probably used a Class? 
+        markedBingoBoards = [[bingoBoard, False] for bingoBoard in bingoBoards]
+
+        for drawnNumber in bingoNumbers : 
+            for board in markedBingoBoards : 
+                # Check only unmarked boards 
+                if not board[1] : 
+                    markNumberAtBoard(drawnNumber, board[0])
+                    if checkForBingo(board[0]) : 
+                        print("We have a bingo for this board!")
+                        finalScore = calculateScoreForBoard(drawnNumber, board[0])
+                        board[1] = True
+
+        print("Score for bingo is : ", finalScore)
 
 def calculateScoreForBoard(drawnNumber, board) : 
 
@@ -52,7 +71,6 @@ def checkForBingo(board) :
             return True
 
     # Check for all columns 
-
     for j in range(5) : 
 
         bingoCount = 0 
@@ -123,4 +141,4 @@ def printBingoBoards(bingoBoards) :
                 print(line)
 
 part1()
-
+part2()
