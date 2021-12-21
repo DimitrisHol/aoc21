@@ -134,18 +134,18 @@ def part2() :
 
         print("Total Count for part 2 :", count)
 
-def part3() : 
+def outputDebug() : 
 
     ventArrayPart1 = []
     ventArrayPart2 = []
 
-    with open("input/test/part2.txt") as file2 : 
+    with open("input/test/day05part2.txt") as file2 : 
 
         for line in file2 : 
 
             ventArrayPart2.append(list(line.strip()))
             
-    with open("input/test/part1.txt") as file1 : 
+    with open("input/test/day05part1.txt") as file1 : 
 
         for line in file1 : 
 
@@ -181,5 +181,5 @@ def part3() :
 
 part1()
 part2() 
-# part3()
+# outputDebug()
 
