@@ -1,5 +1,21 @@
-arraySize = 10 # 10 for test, 1000 for input
+arraySize = 1000 # 10 for test, 1000 for input
 
+
+def printVentArray(ventArray) : 
+        arrayToPrint = []
+        for line in ventArray : 
+            newLine = []
+            for character in line : 
+                if character == 0 : 
+                    newLine.append(".")
+                else : 
+                    newLine.append(str(character))
+            arrayToPrint.append(newLine)
+
+
+        for line in arrayToPrint : 
+            print(line)
+            
 def part1() : 
 
     # ventArray = [[0] * arraySize] * arraySize don't use this lol it's reference
@@ -44,13 +60,12 @@ def part1() :
                 if number >= 2 : 
                     count +=1
 
-        print(count)
+        print("Total Count for part 1 :", count)
 
 def part2() : 
 
     ventArray = [ [0] * arraySize for i in range(arraySize)]
-    with open("input/test/day05.txt") as file : 
-        print("x1, y1, x2 , y2, angle")
+    with open("input/day05.txt") as file : 
 
         for line in file : 
             inputLine = line.rstrip().split(" -> ")
@@ -76,55 +91,40 @@ def part2() :
             minY = min(y1,y2)
 
             if x1 == x2 : 
-                # for i in range(minY,maxY+1) : 
-                    # ventArray[i][x1] += 1
-                pass
+                for i in range(minY,maxY+1) : 
+                    ventArray[i][x1] += 1
             elif y1 == y2 : 
-                # for i in range(minX,maxX+1) : 
-                    # ventArray[y1][i] += 1
-                pass
+                for i in range(minX,maxX+1) : 
+                    ventArray[y1][i] += 1
             else : 
+                # The angle is always diagonal, 45 degrees. 
+                # If the angle = 1, as x increases, y increases --> top to bottom 
+                # if the angle = -1, as the x increases, y decreases or, as y increases x decreases.
 
+                # For angle = 1, we start from min x, min Y and  each time x+1 , y + 1
+                # For angle = -1, we start from min x, max Y each time x +1, y - 1
                 
-                # 45 degrees mean angle is either 1 or -1 (DESC or ASC)
-                # If the angle = -1 starting with the mixX pair, x++ ,y-- NorthEast, that means in the array = -x + y
-                # If the angle = 1  starting with the minX pair, x++, y++ SouthEast, that means in the array = +x + y
                 angle = (y2 - y1) / (x2 - x1)
-                print(x1, y1, x2, y2, angle)
+                # print(x1, y1, x2, y2, angle)
 
-                # For the input x is horizontal, y is vertical
-                # For us        x is vertical ,  y is horizontal
+                x = minX
+                if angle == 1 : 
+                    y = minY
+                else : 
+                    y = maxY
 
-                x = minX # This means leftest possible in the array
-
-                if angle == -1 : # This is upwards, so x--
-                    y = maxY    # start from the bottom (maximum x)
-                else :
-                    y = minY    # start from the top since we're declining (incrementing x)
+                # Filling everything in : 
 
                 for i in range(maxX - minX + 1) : 
+                    ventArray[y][x] += 1    # You need to flip x/y because of how the puzzle considers the axis. 
 
-                    ventArray[x][y] += 1
                     x += 1
-                    if angle == -1 : 
+                    if angle == 1 : 
                         y += 1
                     else : 
                         y -= 1
 
-        arrayToPrint = []
-        for line in ventArray : 
-            newLine = []
-            for character in line : 
-                if character == 0 : 
-                    newLine.append(".")
-                else : 
-                    newLine.append(str(character))
-            arrayToPrint.append(newLine)
-
-
-        for line in arrayToPrint : 
-            print(line)
-                
+        # printVentArray(ventArray)
 
         count = 0
         for line in ventArray : 
@@ -132,7 +132,7 @@ def part2() :
                 if number >= 2 : 
                     count +=1
 
-        print("Total Count = ", count)
+        print("Total Count for part 2 :", count)
 
 def part3() : 
 
@@ -174,19 +174,12 @@ def part3() :
                     newLine.append(str(difference))
         newBoard.append(newLine)
 
+    print("we should be printing this ")
     for line in newBoard : 
-
         print(line)
 
 
-# part1()
+part1()
 part2() 
-part3()
-
-# 21868 wrong, too high
-
-
-
-
-
+# part3()
 
