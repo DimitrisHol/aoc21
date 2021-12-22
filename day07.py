@@ -38,9 +38,6 @@ def solve() :
                     fuelRequiredPart1 += distance * counts[key] # Part 1
                     fuelRequiredPart2 += part2Consumption * counts[key]  # Part 2
                 
-                if fuelRequiredPart1 < minimumFuelRequiredPart1 : 
-                    minimumFuelRequiredPart1 = fuelRequiredPart1
-
                 minimumFuelRequiredPart1 = min(minimumFuelRequiredPart1, fuelRequiredPart1)
                 minimumFuelRequiredPart2 = min(minimumFuelRequiredPart2, fuelRequiredPart2)
 
